@@ -4,7 +4,7 @@ function App() {
 
   const send = async (runs, type = "run") => {
     try {
-      await axios.post(`${import.meta.env.VITE_API_URL}/api/update-score`, {
+      await axios.post(`${import.meta.env.VITE_API_URL}/update-score`, {
         runs,
         type
       });
