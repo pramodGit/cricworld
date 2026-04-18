@@ -2,14 +2,17 @@ import axios from "axios";
 
 function App() {
 
+  const MATCH_ID = "IND-AUS-1"; // later make dynamic
+
   const send = async (runs, type = "run") => {
     try {
       await axios.post(`${import.meta.env.VITE_API_URL}/update-score`, {
+        matchId: MATCH_ID,
         runs,
         type
       });
     } catch (err) {
-      console.error("❌ Update failed", err);
+      console.error("❌ Update failed", err.response?.data || err);
     }
   };
 
