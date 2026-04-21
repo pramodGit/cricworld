@@ -30,15 +30,15 @@ app.get("/api/matches", async (req, res) => {
       SELECT m.id, m.teams, m.status,
              s.runs, s.wickets, s.balls
       FROM matches m
-      JOIN match_scores s ON m.id = s.match_id
-      WHERE m.status = 'LIVE'
+      LEFT JOIN match_scores s ON m.id = s.match_id
     `);
 
     const data = rows.map(r => ({
       matchId: r.id,
       teams: r.teams,
-      score: `${r.runs}/${r.wickets}`,
-      over: getOver(r.balls)
+      status: r.status,
+      score: r.runs !== null ? `${r.runs}/${r.wickets}` : null,
+      over: r.balls !== null ? getOver(r.balls) : null
     }));
 
     res.json(data);
