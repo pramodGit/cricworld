@@ -8,6 +8,18 @@ function App() {
     let socket;
     let isMounted = true;
 
+    // ✅ 1. Fetch initial score from DB
+    async function fetchInitialScore() {
+      try {
+        const matchId = "IND-AUS-1";
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/score/${matchId}`);
+        const data = await res.json();
+        setScore(data);
+      } catch (err) {
+        console.error("Failed to load initial score", err);
+      }
+    }
+
     function connect() {
       socket = new WebSocket(import.meta.env.VITE_WS_URL);
 
@@ -29,6 +41,7 @@ function App() {
       };
     }
 
+    fetchInitialScore();
     connect();
 
     return () => {
