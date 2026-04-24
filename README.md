@@ -9,7 +9,7 @@ A scalable, real-time cricket scoring application inspired by Cricbuzz. Built us
 * ⚡ Real-time score updates (WebSocket)
 * 🧠 Redis-based pub/sub for live fanout
 * 📡 Scorer UI to update runs & wickets
-* 📺 Viewer UI (Cricbuzz-style live score display)
+* 📺 Viewer UI (live score display)
 * 🔄 Multi-match support (live matches list)
 * 🌐 Nginx reverse proxy
 * ⚙️ PM2 process management
