@@ -173,9 +173,15 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
     }
 
-    # 🔥 WebSocket (separate server)
+   # WebSocket (separate server)
+    upstream websocket_servers {
+        server 127.0.0.1:6000;
+        server 127.0.0.1:6001;
+        server 127.0.0.1:6002;
+    }
+
     location /ws {
-        proxy_pass http://localhost:6000;
+        proxy_pass http://websocket_cluster;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
@@ -222,7 +228,20 @@ http://your-domain
 ```
 http://scorer.your-domain
 ```
-
+Final Architecture
+Frontend
+   ↓
+Nginx
+   ↓
+ ┌───────────────┬───────────────┬───────────────┐
+ │ Backend 5000  │ Backend 5001  │ Backend 5002  │
+ └───────────────┴───────────────┴───────────────┘
+   ↓
+Redis Pub/Sub
+   ↓
+ ┌───────────────┬───────────────┬───────────────┐
+ │ WS 6000       │ WS 6001       │ WS 6002       │
+ └───────────────┴───────────────┴───────────────┘
 ---
 
 # 🔮 Future Enhancements
