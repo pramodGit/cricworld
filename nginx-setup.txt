@@ -156,3 +156,71 @@ server {
 
 
 }
+
+# ================================
+# fintech.pramod.click
+# ================================
+server {
+    server_name fintech.pramod.click;
+
+    root /opt/app/fintech-app/dist/fintech-app/browser;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/fintech.pramod.click/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/fintech.pramod.click/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+server {
+    if ($host = fintech.pramod.click) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    server_name fintech.pramod.click;
+    return 404; # managed by Certbot
+
+
+}
+
+# ================================
+# nexus.pramod.click
+# ================================
+server {
+    server_name nexus.pramod.click;
+
+    root /opt/app/nexus-management/dist/nexus-management/browser;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/nexus.pramod.click/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/nexus.pramod.click/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+}
+
+server {
+    if ($host = nexus.pramod.click) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    server_name nexus.pramod.click;
+    listen 80;
+    return 404; # managed by Certbot
+
+
+}
